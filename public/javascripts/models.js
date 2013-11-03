@@ -1,3 +1,9 @@
+function Grass(x,y){
+    this._sprite = new Sprite('grass',16,16);
+    this._x = x || 16;
+    this._y = y ||  25;
+}
+Grass.prototype = Object.create(DrawableObject.prototype);
 function Tower (){
     this._sprite = new Sprite('tower',64,128);
     this._x = 30;

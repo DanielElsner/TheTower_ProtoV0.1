@@ -4,6 +4,7 @@ Engine.Util = function(){
     var horizontalFactor = width / horizontalSquares;
     var verticalFactor = height / verticalSquares;
 
+
     function _getRelativePostion(totalX,totalY){
         var offset = $(Engine.getCanvas()).offset();
         return {
@@ -14,21 +15,26 @@ Engine.Util = function(){
     function _posToCursor(pos,factor){
         return (pos - (pos % factor) ) / factor;
     }
-    function _defaultMap (){
-        console.log('defaultmap');
+
+
+
+    function _getMap (mapName){
+        console.log('fetchMap : '+mapName);
+        var mapObj = Maps[mapName];
         var map = [verticalSquares];
         for(var i = 0 ; i < horizontalSquares ; i++){
             var row = [horizontalSquares];
             for(var j = 0 ; j < verticalSquares ; j++){
-                row[j] = {
-                    'x' : i,
-                    'y' : j,
-                    image : 'grass'
-                };
-                map[i] = row;
+                row[j] = new MapObject(new mapObj.backgroundObj(i,j));
             }
+            map[i] = row;
         }
-        return map;
+        mapObj.arr = map;
+        for(var i = 0 ; i < mapObj.objects.length ; i++){
+            var obj = mapObj.objects[i];
+            map[obj.coords.x][obj.coords.y].add(new obj.obj(obj.coords.x,obj.coords.y));
+        }
+        return mapObj;
     }
 
     function _posToMapCoords(relativePos){
@@ -48,9 +54,9 @@ Engine.Util = function(){
 
     return{
         posToCursor :_posToCursor ,
-        defaultMap :_defaultMap ,
         getRelativePostion: _getRelativePostion,
         posToMapCoords : _posToMapCoords,
-        getMapPosByCoords : _getMapPosByCoords
+        getMapPosByCoords : _getMapPosByCoords,
+        getMap : _getMap
     }
 }();

@@ -1,25 +1,26 @@
 Engine.Map = function(){
-    var Map = Engine.Util.defaultMap();
+    var Map;
 
 
     function _add(obj, cleanPos){
         cleanPos = cleanPos || {x: obj._x,y: obj._y}
-       var coords = Engine.Util.posToMapCoords(cleanPos);
         obj._x = cleanPos.x;
         obj._y = cleanPos.y;
-//        Map[coords.i][coords.j] = obj;
-        Map[cleanPos.x][cleanPos.y] = obj;
+        Map.arr[cleanPos.x][cleanPos.y].add(obj);//[Map.arr[cleanPos.x][cleanPos.y].length] = obj;
         obj.draw();
     }
 
     return {
+        set : function(mapObj){
+           this.Map =  mapObj;
+        },
         get : function(){
-            return Map;
+            return this.Map.arr;
         },
         getByCoords: function (coords){
              var obj;
             if (coords) {
-                obj =Map[coords.i][coords.j];
+                obj =this.Map.arr[coords.i][coords.j];
             }
             return obj;
         }   ,

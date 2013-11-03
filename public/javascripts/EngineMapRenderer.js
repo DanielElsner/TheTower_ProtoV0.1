@@ -2,12 +2,10 @@ Engine.MapRenderer = function(){
 
 
     function drawMap(){
-
         for(var i = 0 ; i < Engine.Map.get().length ; i++){
             var row = Engine.Map.get()[i];
             for(var j = 0 ; j < row.length ; j++){
-                _fillFieldWithImage(row[j]);
-
+               row[j].draw();
             }
         }
     }
