@@ -43,27 +43,6 @@ function Sprite (image,xScale,yScale){
         this._yScale =yScale;
 }
 
-function Tile (xPos,yPos){
-    this._xPos;
-    this._yPos;
-    this._objects = [];
-}
-
-Tile.prototype.getObjects = function(){
-    return this._objects;
-}
-Tile.prototype.getObject = function(id){
-    return this._objects[id];
-}
-Tile.prototype.add = function (obj){
-    this._objects.push(obj);
-}
-Tile.prototype.removeObj = function (obj){
-    var idInt = parseInt(obj);
-
-
-}
-
 Sprite.prototype.draw = function(xPos,yPos){
     var field = {
         x:xPos,
