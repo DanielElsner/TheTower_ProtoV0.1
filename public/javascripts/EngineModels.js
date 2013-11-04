@@ -1,23 +1,17 @@
-function MapObject(firstObj,coords){
+function MapObject(coords){
     this.Objects = [];
     this.coords = coords;
     this.TileStack = new TileStack();
-    if(firstObj){
-        this.add(firstObj);
-    }
-
 }
 MapObject.prototype.add = function(obj){
     this.Objects[this.Objects.length] = obj;
-    this.TileStack.add(obj,this.coords);
+    this.TileStack.add(obj.sprite,this.coords);
 }
 
 MapObject.prototype.draw = function(){
    this.TileStack.draw();
 }
-MapObject.prototype.getCoords = function(){
-   return this.coords;
-}
+
 MapObject.prototype.click = function(){
     for(var i = 0 ; i < this.Objects.length ; i++){
         if(this.Objects[i].click){
@@ -30,8 +24,8 @@ function TileStack(){
     this.stack = [];
 }
 
-TileStack.prototype.add = function(obj,coords){
-    this.stack[this.stack.length] = new Tile(obj._sprite,coords.x,coords.y)
+TileStack.prototype.add = function(sprite,coords){
+    this.stack[this.stack.length] = new Tile(sprite,coords.x,coords.y)
 }
 
 TileStack.prototype.draw = function(){
@@ -54,19 +48,18 @@ Tile.prototype.draw = function(){
         y:this._y ,
         image: this._sprite._image
     }
-    Engine.MapRenderer.fillFieldWithImage(field,{x:this._sprite._xScale , y:this._sprite._yScale});
+    Engine.MapRenderer.fillFieldWithImage(field,{x:this._sprite._xClipping , y:this._sprite._yClipping});
 }
 
 function DefaultMapObject(){
-    this.sprite;
 }
 DefaultMapObject.prototype.click = function(){
-    console.log('clicked: '+this._sprite._image );
+    console.log(this );
 }
 
 
-function Sprite (image,xScale,yScale){
+function Sprite (image,xClipping,yClipping){
     this._image =image,
-        this._xScale =xScale,
-        this._yScale =yScale;
+        this._xClipping =xClipping || 0,
+        this._yClipping =yClipping || 0;
 }

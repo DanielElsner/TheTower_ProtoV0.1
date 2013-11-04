@@ -25,7 +25,10 @@ Engine.Util = function(){
         for(var i = 0 ; i < horizontalSquares ; i++){
             var row = [horizontalSquares];
             for(var j = 0 ; j < verticalSquares ; j++){
-                row[j] = new MapObject(new mapObj.backgroundObj(),{x:i,y:j});
+                var obj = new mapObj.backgroundObj()
+                obj.sprite = fetchSprite(obj._image[0]);
+                row[j] = new MapObject({x:i,y:j});
+                row[j].add(obj);
             }
             map[i] = row;
         }
@@ -36,18 +39,28 @@ Engine.Util = function(){
         return mapObj;
     }
 
+    function fetchSprite(image,xClipping,yClipping){
+        return new Sprite(image,xClipping,yClipping)
+    }
     function proccessMapObj(MapObj,map){
         console.log(MapObj);
         var obj = new MapObj.obj();
+        var image = obj._image[0];
         var coords = MapObj.coords;
 
-        map[coords.x][coords.y].add(obj,coords);
+        for(var i = 0 ; i < obj._image[1] / horizontalFactor ; i++){
+            for(var j = 0 ; j < obj._image[2] / verticalFactor ; j++){
+                obj.sprite = fetchSprite(image,i*horizontalFactor,j*verticalFactor);
+                console.log(obj.sprite);
+                var newCoords = {
+                    x : coords.x +i,
+                    y : coords.y +j
+                }
+                map[newCoords.x][newCoords.y].add(obj,newCoords);
+            }
+        }
     }
 
-
-    function addParticialToMap(obj,map,particial){
-
-    }
 
     function _posToMapCoords(relativePos){
         var coords = {};

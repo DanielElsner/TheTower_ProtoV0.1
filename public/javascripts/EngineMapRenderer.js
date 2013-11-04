@@ -9,13 +9,12 @@ Engine.MapRenderer = function(){
             }
         }
     }
-    function _fillFieldWithImage(field,scale){
-        scale = scale || {x:16,y:16};
+    function _fillFieldWithImage(field,clipping){
+        clipping = clipping || {x:16,y:16};
         var image = new Image();
-//        var elem = document.getElementById(field.image);
         var pos = Engine.Util.getMapPosByCoords(field);
         image.onload = function () {
-            Engine.getContext().drawImage(image,pos.x,pos.y,scale.x,scale.y);//,field.x+verticalFactor,field.y+horizontalFactor,100,100);
+            Engine.getContext().drawImage(image,clipping.x,clipping.y,16,16,pos.x,pos.y,16,16);
         }
         //TODO magic magic
         image.src = 'images/'+field.image+'.png';
