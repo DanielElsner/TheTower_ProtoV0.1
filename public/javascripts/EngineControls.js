@@ -13,7 +13,13 @@ Engine.Controls = function(){
     function attachEventListener(){
         $(Engine.getCanvas()).click(function(event){
           handleClick(event);
-        })
+        });
+        $(Engine.getCanvas()).on('contextmenu',function(e){
+            //suppress rightclick context menu
+            e.preventDefault();
+        });
+
+
     }
 
     return {

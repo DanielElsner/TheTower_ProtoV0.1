@@ -25,16 +25,28 @@ Engine.Util = function(){
         for(var i = 0 ; i < horizontalSquares ; i++){
             var row = [horizontalSquares];
             for(var j = 0 ; j < verticalSquares ; j++){
-                row[j] = new MapObject(new mapObj.backgroundObj(i,j));
+                row[j] = new MapObject(new mapObj.backgroundObj(),{x:i,y:j});
             }
             map[i] = row;
         }
         mapObj.arr = map;
         for(var i = 0 ; i < mapObj.objects.length ; i++){
-            var obj = mapObj.objects[i];
-            map[obj.coords.x][obj.coords.y].add(new obj.obj(obj.coords.x,obj.coords.y));
+            proccessMapObj(mapObj.objects[i],map);
         }
         return mapObj;
+    }
+
+    function proccessMapObj(MapObj,map){
+        console.log(MapObj);
+        var obj = new MapObj.obj();
+        var coords = MapObj.coords;
+
+        map[coords.x][coords.y].add(obj,coords);
+    }
+
+
+    function addParticialToMap(obj,map,particial){
+
     }
 
     function _posToMapCoords(relativePos){
