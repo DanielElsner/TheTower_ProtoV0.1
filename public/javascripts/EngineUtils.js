@@ -50,13 +50,15 @@ Engine.Util = function(){
 
         for(var i = 0 ; i < obj._image[1] / horizontalFactor ; i++){
             for(var j = 0 ; j < obj._image[2] / verticalFactor ; j++){
-                obj.sprite = fetchSprite(image,i*horizontalFactor,j*verticalFactor);
-                console.log(obj.sprite);
                 var newCoords = {
                     x : coords.x +i,
                     y : coords.y +j
                 }
-                map[newCoords.x][newCoords.y].add(obj,newCoords);
+                if(map[newCoords.x][newCoords.y]){
+                    obj.sprite = fetchSprite(image,i*horizontalFactor,j*verticalFactor);
+                    console.log(obj.sprite);
+                    map[newCoords.x][newCoords.y].add(obj,newCoords);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ Engine.Controls = function(){
         var coords = Engine.Util.posToMapCoords(Engine.Util.getRelativePostion(ev.pageX ,ev.pageY));
         var obj = Engine.Map.getByCoords(coords);
         if(obj){
-            obj.click();
+            obj.click({originalEvent:ev,coords : coords}    );
         }
 
     }

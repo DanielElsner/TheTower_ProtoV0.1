@@ -12,10 +12,10 @@ MapObject.prototype.draw = function(){
    this.TileStack.draw();
 }
 
-MapObject.prototype.click = function(){
+MapObject.prototype.click = function(ev){
     for(var i = 0 ; i < this.Objects.length ; i++){
         if(this.Objects[i].click){
-            this.Objects[i].click();
+            this.Objects[i].click(ev);
         }
     }
 }
@@ -53,7 +53,7 @@ Tile.prototype.draw = function(){
 
 function DefaultMapObject(){
 }
-DefaultMapObject.prototype.click = function(){
+DefaultMapObject.prototype.click = function(ev){
     console.log(this );
 }
 
