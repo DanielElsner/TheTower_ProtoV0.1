@@ -43,7 +43,6 @@ Engine.Util = function(){
         return new Sprite(image,xClipping,yClipping)
     }
     function proccessMapObj(MapObj,map){
-        console.log(MapObj);
         var obj = new MapObj.obj();
         var image = obj._image[0];
         var coords = MapObj.coords;
@@ -56,7 +55,6 @@ Engine.Util = function(){
                 }
                 if(map[newCoords.x][newCoords.y]){
                     obj.sprite = fetchSprite(image,i*horizontalFactor,j*verticalFactor);
-                    console.log(obj.sprite);
                     map[newCoords.x][newCoords.y].add(obj,newCoords);
                 }
             }

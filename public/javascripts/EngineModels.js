@@ -5,7 +5,7 @@ function MapObject(coords){
 }
 MapObject.prototype.add = function(obj){
     this.Objects[this.Objects.length] = obj;
-    this.TileStack.add(obj.sprite,this.coords);
+    this.TileStack.add(obj,this.coords);
 }
 
 MapObject.prototype.draw = function(){
@@ -21,11 +21,13 @@ MapObject.prototype.click = function(ev){
 }
 
 function TileStack(){
-    this.stack = [];
+    this.stack = {};
 }
 
-TileStack.prototype.add = function(sprite,coords){
-    this.stack[this.stack.length] = new Tile(sprite,coords.x,coords.y)
+TileStack.prototype.add = function(obj, coords){
+    var tile = new Tile(obj.sprite, coords.x, coords.y);
+    obj.addTile(tile,coords,obj);
+    this.stack.set(obj.uid,tile);
 }
 
 TileStack.prototype.draw = function(){
@@ -51,10 +53,39 @@ Tile.prototype.draw = function(){
     Engine.MapRenderer.fillFieldWithImage(field,{x:this._sprite._xClipping , y:this._sprite._yClipping});
 }
 
+
+
 function DefaultMapObject(){
+    this.renderedTiles = [];
+    console.log('DMO called');
 }
-DefaultMapObject.prototype.click = function(ev){
-    console.log(this );
+
+DefaultMapObject.prototype.addTile = function(tile,coords){
+    this.renderedTiles.push({
+        tile : tile,
+        coords : coords
+    });
+}
+
+function ClickableMapObject(){
+}
+ClickableMapObject.prototype = new DefaultMapObject();
+
+
+function Clickable(action){
+    this.action = action;
+    this.click = function(ev){
+       var action = this.action || function(){console.log('clicked, no action definied')};
+        action(this);
+    }
+    return this;
+}
+
+function CanMove(){
+    this.move = function(direction, steps){
+        console.log('canMove');
+    }
+    return this;
 }
 
 
